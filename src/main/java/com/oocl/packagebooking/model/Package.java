@@ -18,7 +18,7 @@ public class Package {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @Column(name = "logisticsNumber")
+    @Column(name = "mobilePhone")
     private String mobilePhone;
 
     @Column(name = "status")
@@ -26,6 +26,17 @@ public class Package {
 
     @Column(name = "appointmentTime")
     private Date appointmentTime;
+
+    public Package() {
+    }
+
+    public Package(String logisticsNumber, Customer customer, String mobilePhone, int status, Date appointmentTime) {
+        this.logisticsNumber = logisticsNumber;
+        this.customer = customer;
+        this.mobilePhone = mobilePhone;
+        this.status = status;
+        this.appointmentTime = appointmentTime;
+    }
 
     public long getId() {
         return id;
