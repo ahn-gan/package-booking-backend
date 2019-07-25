@@ -1,5 +1,7 @@
 package com.oocl.packagebooking.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oocl.packagebooking.common.Constants;
 import com.oocl.packagebooking.model.Customer;
 import com.oocl.packagebooking.model.Package;
 import com.oocl.packagebooking.service.PackageService;
@@ -21,8 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,10 +44,10 @@ public class PackageControllerTest {
 
     @Before
     public void setUp() {
-        packages = new ArrayList<Package>(){{
-                new Package("NO10001", new Customer(), "123456789", 1, new Date());
-                new Package("NO10001", new Customer(), "123456789", 1, new Date());
-                new Package("NO10001", new Customer(), "123456789", 1, new Date());
+        packages = new ArrayList<Package>() {{
+            new Package("NO10001", new Customer(), "123456789", 1, new Date());
+            new Package("NO10001", new Customer(), "123456789", 1, new Date());
+            new Package("NO10001", new Customer(), "123456789", 1, new Date());
         }};
     }
 
@@ -61,4 +62,16 @@ public class PackageControllerTest {
                 .andExpect(jsonPath("$.length()").value(packages.size()));
     }
 
+    @Test
+    public void should_return_the_updated_package_when_request_to_update() throws Exception {
+        Package packageInformation = new Package("NO10001", new Customer(), "123456789", Constants.BE_TAKEN_STATUS, new Date());
+        Mockito.when(packageService.updateConditions(Mockito.anyInt(), Mockito.any()))
+                .thenReturn(packageInformation);
+        mockMvc.perform(put("/packages/{id}", "1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(packageInformation)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(0));
+    }
 }

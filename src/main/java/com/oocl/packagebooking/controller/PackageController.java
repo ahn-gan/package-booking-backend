@@ -1,6 +1,7 @@
 package com.oocl.packagebooking.controller;
 
 import com.oocl.packagebooking.dto.ParamsDto;
+import com.oocl.packagebooking.model.Package;
 import com.oocl.packagebooking.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ public class PackageController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateConditions(@PathVariable int id, @RequestBody Package packageinformation) {
-        return ResponseEntity.ok(packageService.updateConditions(id, packageinformation));
+    public ResponseEntity updateConditions(@PathVariable int id, @RequestBody Package packageInformation) {
+        Package resultPackage = packageService.updateConditions(id, packageInformation);
+        return resultPackage != null ? ResponseEntity.ok(resultPackage) : ResponseEntity.notFound().build();
     }
 
 }
