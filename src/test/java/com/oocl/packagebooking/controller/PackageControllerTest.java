@@ -52,7 +52,7 @@ public class PackageControllerTest {
 
     @Test
     public void should_return_all_packages_when_request_for_all() throws Exception {
-        Mockito.when(packageService.findAllPackages())
+        Mockito.when(packageService.findByConditions(Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(packages);
         mockMvc.perform(get("/packages")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
