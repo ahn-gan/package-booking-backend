@@ -44,9 +44,9 @@ public class PackageControllerTest {
     @Before
     public void setUp() {
         packages = new ArrayList<Package>() {{
-            new Package("NO10001", new Customer(), "123456789", 1, new Date());
-            new Package("NO10001", new Customer(), "123456789", 1, new Date());
-            new Package("NO10001", new Customer(), "123456789", 1, new Date());
+            new Package("NO10001", new Customer(), 1, new Date());
+            new Package("NO10001", new Customer(), 1, new Date());
+            new Package("NO10001", new Customer(), 1, new Date());
         }};
     }
 
@@ -63,7 +63,7 @@ public class PackageControllerTest {
 
     @Test
     public void should_return_the_updated_package_when_request_to_update() throws Exception {
-        Package packageInformation = new Package("NO10001", new Customer(), "123456789", Constants.BE_TAKEN_STATUS, new Date());
+        Package packageInformation = new Package("NO10001", new Customer(), Constants.BE_TAKEN_STATUS, new Date());
         Mockito.when(packageService.updatePackage(Mockito.anyInt(), Mockito.any()))
                 .thenReturn(packageInformation);
         mockMvc.perform(put("/packages/{id}", "1")
@@ -76,7 +76,7 @@ public class PackageControllerTest {
 
     @Test
     public void should_return_the_new_package_with_id_when_request_to_insert() throws Exception {
-        Package packageInformation = new Package("NO10001", new Customer(), "123456789", Constants.NO_ORDERED, new Date());
+        Package packageInformation = new Package("NO10001", new Customer(), Constants.NO_ORDERED, new Date());
         packageInformation.setId(10010);
         Mockito.when(packageService.savePackage(Mockito.any()))
                 .thenReturn(packageInformation);

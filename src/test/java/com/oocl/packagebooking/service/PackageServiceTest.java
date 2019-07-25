@@ -36,7 +36,7 @@ public class PackageServiceTest {
     public void should_return_all_the_status_is_1_packages_when_request_with_conditions() {
         // given
         List<Package> packages = new ArrayList<>();
-        packages.add(new Package("NO10001", new Customer(), "123456789", 1, new Date()));
+        packages.add(new Package("NO10001", new Customer(),1, new Date()));
 
         Mockito.when(packageRepository.findAll((Specification<Package>)Mockito.any())).thenReturn(packages);
 
@@ -49,7 +49,7 @@ public class PackageServiceTest {
     @Test
     public void should_return_the_updated_package_when_request_to_update() {
         // given
-        Package givenPackage = new Package("NO10001", new Customer(), "123456789", 1, new Date());
+        Package givenPackage = new Package("NO10001", new Customer(), 1, new Date());
         givenPackage.setId(1);
         Mockito.when(packageRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(givenPackage));
         Mockito.when(packageRepository.save(Mockito.any())).thenReturn(givenPackage);
@@ -58,5 +58,17 @@ public class PackageServiceTest {
         Package updatedPackage = packageService.updatePackage(id, givenPackage);
         // then
         Assertions.assertEquals(updatedPackage.getStatus(), givenPackage.getStatus());
+    }
+
+    @Test
+    public void should_return_the_new_package_with_id_when_request_to_save_a_new_record() throws Exception {
+        // given
+        Package givenPackage = new Package("NO10001", new Customer(), 1, new Date());
+        givenPackage.setId(10010);
+        Mockito.when(packageRepository.save(Mockito.any())).thenReturn(givenPackage);
+        // when
+        Package createPackage = packageService.savePackage(givenPackage);
+        // then
+        Assertions.assertEquals(givenPackage.getId(), createPackage.getId());
     }
 }

@@ -1,5 +1,6 @@
 package com.oocl.packagebooking.service;
 
+import com.oocl.packagebooking.common.exception.CustomException;
 import com.oocl.packagebooking.model.Package;
 import com.oocl.packagebooking.repository.PackageRepository;
 import org.springframework.beans.BeanUtils;
@@ -45,5 +46,14 @@ public class PackageService {
             return packageRepository.save(originalPackage);
         }
         return originalPackage;
+    }
+
+    @Transactional
+    public Package savePackage(Package packageInformation) throws Exception {
+        if (!packageInformation.getLogisticsNumber().isEmpty() && packageInformation.getCustomer() != null) {
+            packageInformation.setStatus(NO_ORDERED);
+            return packageRepository.save(packageInformation);
+        }
+        throw new CustomException("Invalid package information! Please check and try again.");
     }
 }

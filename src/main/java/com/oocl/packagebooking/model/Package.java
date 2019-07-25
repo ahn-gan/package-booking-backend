@@ -20,9 +20,6 @@ public class Package {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-//    @Column(name = "mobilePhone")
-//    private String mobilePhone;
-
     @Column(name = "status")
     private int status;
 
@@ -32,10 +29,9 @@ public class Package {
     public Package() {
     }
 
-    public Package(String logisticsNumber, Customer customer, String mobilePhone, int status, Date appointmentTime) {
+    public Package(String logisticsNumber, Customer customer, int status, Date appointmentTime) {
         this.logisticsNumber = logisticsNumber;
         this.customer = customer;
-//        this.mobilePhone = mobilePhone;
         this.status = status;
         this.appointmentTime = appointmentTime;
     }
@@ -63,14 +59,6 @@ public class Package {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-//    public String getMobilePhone() {
-//        return mobilePhone;
-//    }
-//
-//    public void setMobilePhone(String mobilePhone) {
-//        this.mobilePhone = mobilePhone;
-//    }
 
     public int getStatus() {
         return status;
