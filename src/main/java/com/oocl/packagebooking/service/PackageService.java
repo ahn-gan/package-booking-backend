@@ -27,6 +27,10 @@ public class PackageService {
                     Path statusPath = root.get("status");
                     Predicate p = criteriaBuilder.equal(statusPath, status);
                     predicateList.add(p);
+                } else {
+                    Path statusPath = root.get("status");
+                    Predicate p = criteriaBuilder.isNull(statusPath);
+                    predicateList.add(p);
                 }
                 if (hasOrdered == HAVD_ORDERED) {
                     Path appointmentTime = root.get("appointmentTime");
