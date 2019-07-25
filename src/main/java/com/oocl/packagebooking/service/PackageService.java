@@ -20,29 +20,15 @@ public class PackageService {
     @Autowired
     private PackageRepository packageRepository;
 
-    public List<Package> findByConditions(int status, int hasOrdered) {
-        return (status == BE_TAKEN_STATUS && hasOrdered == NO_ORDERED) ? packageRepository.findAll() : packageRepository.findAll(new Specification<Package>() {
+    public List<Package> findByConditions(int status) {
+        return (status == ALL_STATUS) ? packageRepository.findAll() : packageRepository.findAll(new Specification<Package>() {
             @Override
             public Predicate toPredicate(Root<Package> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicateList = new ArrayList<>();
-                if (status == TO_TAKE_STATUS) {
-                    Path statusPath = root.get("status");
-                    Predicate p = criteriaBuilder.equal(statusPath, status);
-                    predicateList.add(p);
-                } else {
-                    Path statusPath = root.get("status");
-                    Predicate p = criteriaBuilder.isNull(statusPath);
-                    predicateList.add(p);
-                }
-                if (hasOrdered == HAVD_ORDERED) {
-                    Path appointmentTime = root.get("appointmentTime");
-                    Predicate p = criteriaBuilder.isNotNull(appointmentTime);
-                    predicateList.add(p);
-                } else {
-                    Path appointmentTime = root.get("appointmentTime");
-                    Predicate p = criteriaBuilder.isNull(appointmentTime);
-                    predicateList.add(p);
-                }
+                Path statusPath = root.get("status");
+                Predicate p = criteriaBuilder.equal(statusPath, status);
+                predicateList.add(p);
+
                 Predicate[] predicates = new Predicate[predicateList.size()];
                 predicateList.toArray(predicates);
                 criteriaQuery.where(predicates);
