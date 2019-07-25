@@ -19,4 +19,9 @@ public class PackageController {
         return ResponseEntity.ok(packageService.findByConditions(status, hasOrdered));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateConditions(@PathVariable int id, @RequestBody Package packageinformation) {
+        return ResponseEntity.ok(packageService.updateConditions(id, packageinformation));
+    }
+
 }

@@ -48,4 +48,8 @@ public class PackageService {
             }
         });
     }
+
+    public Package updateConditions(int id, java.lang.Package packageinformation) {
+        return null;
+    }
 }
