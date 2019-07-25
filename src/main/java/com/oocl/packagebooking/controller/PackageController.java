@@ -15,8 +15,8 @@ public class PackageController {
     private PackageService packageService;
 
     @GetMapping
-    public ResponseEntity findByConditions(@RequestParam(value = "status", defaultValue = "0") int status, @RequestParam(value = "hasOrdered", defaultValue = "0") int hasOrdered) {
-        return ResponseEntity.ok(packageService.findByConditions(status, hasOrdered));
+    public ResponseEntity findByConditions(@RequestParam(value = "status", defaultValue = "-1") int status) {
+        return ResponseEntity.ok(packageService.findByConditions(status));
     }
 
     @PutMapping("/{id}")

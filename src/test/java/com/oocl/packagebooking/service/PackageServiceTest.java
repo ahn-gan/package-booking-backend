@@ -32,9 +32,6 @@ public class PackageServiceTest {
     @MockBean
     PackageRepository packageRepository;
 
-//    @MockBean
-//    BeanUtils beanUtils;
-
     @Test
     public void should_return_all_the_status_is_1_packages_when_request_with_conditions() {
         // given
@@ -44,7 +41,7 @@ public class PackageServiceTest {
         Mockito.when(packageRepository.findAll((Specification<Package>)Mockito.any())).thenReturn(packages);
 
         // when
-        List<Package> actualPackages = packageService.findByConditions(Constants.TO_TAKE_STATUS, Constants.HAVD_ORDERED);
+        List<Package> actualPackages = packageService.findByConditions(Constants.HAVED_ORDERED);
         // then
         Assertions.assertEquals(packages.size(), actualPackages.size());
     }
