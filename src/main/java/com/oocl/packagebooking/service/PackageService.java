@@ -2,11 +2,13 @@ package com.oocl.packagebooking.service;
 
 import com.oocl.packagebooking.model.Package;
 import com.oocl.packagebooking.repository.PackageRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,13 @@ public class PackageService {
         });
     }
 
-    public Package updateConditions(int id, java.lang.Package packageinformation) {
-        return null;
+    @Transactional
+    public Package updatePackage(int id, Package packageInformation) {
+        Package originalPackage = packageRepository.findById((long) id).orElse(null);
+        if (originalPackage != null) {
+            BeanUtils.copyProperties(packageInformation, originalPackage, "id");
+            return packageRepository.save(originalPackage);
+        }
+        return originalPackage;
     }
 }

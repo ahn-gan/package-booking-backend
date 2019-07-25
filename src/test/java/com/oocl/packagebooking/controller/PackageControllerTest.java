@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,7 +64,7 @@ public class PackageControllerTest {
     @Test
     public void should_return_the_updated_package_when_request_to_update() throws Exception {
         Package packageInformation = new Package("NO10001", new Customer(), "123456789", Constants.BE_TAKEN_STATUS, new Date());
-        Mockito.when(packageService.updateConditions(Mockito.anyInt(), Mockito.any()))
+        Mockito.when(packageService.updatePackage(Mockito.anyInt(), Mockito.any()))
                 .thenReturn(packageInformation);
         mockMvc.perform(put("/packages/{id}", "1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

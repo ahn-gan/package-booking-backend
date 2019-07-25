@@ -32,6 +32,9 @@ public class PackageServiceTest {
     @MockBean
     PackageRepository packageRepository;
 
+//    @MockBean
+//    BeanUtils beanUtils;
+
     @Test
     public void should_return_all_the_status_is_1_packages_when_request_with_conditions() {
         // given
@@ -44,5 +47,19 @@ public class PackageServiceTest {
         List<Package> actualPackages = packageService.findByConditions(Constants.TO_TAKE_STATUS, Constants.HAVD_ORDERED);
         // then
         Assertions.assertEquals(packages.size(), actualPackages.size());
+    }
+
+    @Test
+    public void should_return_the_updated_package_when_request_to_update() {
+        // given
+        Package givenPackage = new Package("NO10001", new Customer(), "123456789", 1, new Date());
+        givenPackage.setId(1);
+        Mockito.when(packageRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.of(givenPackage));
+        Mockito.when(packageRepository.save(Mockito.any())).thenReturn(givenPackage);
+        int id = 1;
+        // when
+        Package updatedPackage = packageService.updatePackage(id, givenPackage);
+        // then
+        Assertions.assertEquals(updatedPackage.getStatus(), givenPackage.getStatus());
     }
 }
