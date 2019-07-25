@@ -73,4 +73,18 @@ public class PackageControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(0));
     }
+
+    @Test
+    public void should_return_the_new_package_with_id_when_request_to_insert() throws Exception {
+        Package packageInformation = new Package("NO10001", new Customer(), "123456789", Constants.NO_ORDERED, new Date());
+        packageInformation.setId(10010);
+        Mockito.when(packageService.savePackage(Mockito.any()))
+                .thenReturn(packageInformation);
+        mockMvc.perform(post("/packages")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(packageInformation)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(10010));
+    }
 }

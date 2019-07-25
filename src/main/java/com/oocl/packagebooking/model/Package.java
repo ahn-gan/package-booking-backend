@@ -1,6 +1,7 @@
 package com.oocl.packagebooking.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,9 +13,10 @@ public class Package {
     private long id;
 
     @Column(name = "logisticsNumber")
+    @NotNull
     private String logisticsNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 

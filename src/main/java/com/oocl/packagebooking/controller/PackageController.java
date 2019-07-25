@@ -25,4 +25,9 @@ public class PackageController {
         return resultPackage != null ? ResponseEntity.ok(resultPackage) : ResponseEntity.notFound().build();
     }
 
+    @PostMapping
+    public ResponseEntity addPackageInformation(@RequestBody Package packageInformation) throws Exception {
+        return ResponseEntity.ok(packageService.savePackage(packageInformation));
+    }
+
 }
